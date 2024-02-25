@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
 from pymongo import MongoClient
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -8,7 +7,6 @@ from dotenv import load_dotenv
 import os
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "https://intellevo.ai"}})
 
 load_dotenv()
 mongo_uri = os.getenv('MONGODB_URI')
@@ -74,7 +72,10 @@ def register():
 
         send_confirmation_email(email, name)
 
-        return jsonify({'message': 'Form submitted successfully!'}), 200
+        # Manually add CORS headers
+        response = jsonify({'message': 'Form submitted successfully!'})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response, 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
