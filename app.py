@@ -8,8 +8,8 @@ from dotenv import load_dotenv
 import os
 
 app = Flask(__name__)
-CORS(app)
 
+CORS(app, resources={r"/register": {"origins": "https://www.intellevo.ai"}})
 load_dotenv()
 mongo_uri = os.getenv('MONGODB_URI')
 
@@ -56,7 +56,6 @@ def hello_world():
     return 'Hello, world!'
 
 @app.route('/register', methods=['POST'])
-@cross_origin(origins=["https://intellevo.ai", "http://www.intellevo.ai", "https://www.intellevo.ai"])
 def register():
     try:
         data = request.get_json()
