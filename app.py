@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from pymongo import MongoClient
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -7,6 +8,7 @@ from dotenv import load_dotenv
 import os
 
 app = Flask(__name__)
+CORS(app, supports_credentials=True)
 
 load_dotenv()
 mongo_uri = os.getenv('MONGODB_URI')
@@ -74,7 +76,8 @@ def register():
 
         # Manually add CORS headers
         response = jsonify({'message': 'Form submitted successfully!'})
-        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.headers.add('Access-Control-Allow-Origin', 'https://localhost:3000')  # Adjust as needed
+        response.headers.add('Access-Control-Allow-Credentials', 'true')
         return response, 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
