@@ -1,15 +1,17 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 from pymongo import MongoClient
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from dotenv import load_dotenv
 import os
+import traceback
 
 app = Flask(__name__)
 
 CORS(app, origins='*')
+
 load_dotenv()
 mongo_uri = os.getenv('MONGODB_URI')
 
@@ -76,7 +78,8 @@ def register():
 
         return jsonify({'message': 'Form submitted successfully!'}), 200
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        traceback.print_exc()  # Add this line to print the traceback
+        return jsonify({'error': 'Internal server error.'}), 500
 
 if __name__ == '__main__':
     app.run()
