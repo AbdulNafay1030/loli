@@ -9,7 +9,7 @@ import os
 
 app = Flask(__name__)
 
-CORS(app, resources={r"/register": {"origins": "https://www.intellevo.ai"}})
+CORS(app, origins='*')
 load_dotenv()
 mongo_uri = os.getenv('MONGODB_URI')
 
