@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from pymongo import MongoClient
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -56,6 +56,7 @@ def hello_world():
     return 'Hello, world!'
 
 @app.route('/register', methods=['POST'])
+@cross_origin(origins=["https://intellevo.ai", "http://www.intellevo.ai", "https://www.intellevo.ai"])
 def register():
     try:
         data = request.get_json()
