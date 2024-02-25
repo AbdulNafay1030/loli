@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 import os
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)
+CORS(app)
 
 load_dotenv()
 mongo_uri = os.getenv('MONGODB_URI')
@@ -74,11 +74,7 @@ def register():
 
         send_confirmation_email(email, name)
 
-        # Manually add CORS headers
-        response = jsonify({'message': 'Form submitted successfully!'})
-        response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')  # Adjust as needed
-        response.headers.add('Access-Control-Allow-Credentials', 'true')
-        return response, 200
+        return jsonify({'message': 'Form submitted successfully!'}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
