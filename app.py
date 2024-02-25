@@ -76,7 +76,7 @@ def register():
 
         # Manually add CORS headers
         response = jsonify({'message': 'Form submitted successfully!'})
-        response.headers.add('Access-Control-Allow-Origin', 'https://localhost:3000')  # Adjust as needed
+        response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')  # Adjust as needed
         response.headers.add('Access-Control-Allow-Credentials', 'true')
         return response, 200
     except Exception as e:
