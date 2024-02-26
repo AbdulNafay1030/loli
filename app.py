@@ -81,5 +81,10 @@ def register():
         traceback.print_exc()  # Add this line to print the traceback
         return jsonify({'error': 'Internal server error.'}), 500
 
+# Retrieve the port from the environment variable
+port = int(os.environ.get("PORT", 5000))
+
 if __name__ == '__main__':
-    app.run(debug=False)
+    # Use the retrieved port
+    app.run(host='0.0.0.0', port=port)
+
